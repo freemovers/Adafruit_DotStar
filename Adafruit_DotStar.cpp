@@ -25,7 +25,7 @@
   ------------------------------------------------------------------------*/
 
 #include "Adafruit_DotStar.h"
-#if !defined(__AVR_ATtiny85__)
+#if (!defined(__AVR_ATtiny85__) || !defined(__AVR_ATtiny84__))
  #include <SPI.h>
 #endif
 
@@ -100,7 +100,7 @@ void Adafruit_DotStar::updateLength(uint16_t n) {
 // SPI STUFF ---------------------------------------------------------------
 
 void Adafruit_DotStar::hw_spi_init(void) { // Initialize hardware SPI
-#ifdef __AVR_ATtiny85__
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny84__)
   PORTB &= ~(_BV(PORTB1) | _BV(PORTB2)); // Outputs
   DDRB  |=   _BV(PORTB1) | _BV(PORTB2);  // DO (NOT MOSI) + SCK
 #elif (SPI_INTERFACES_COUNT > 0) || !defined(SPI_INTERFACES_COUNT)
@@ -124,7 +124,7 @@ void Adafruit_DotStar::hw_spi_init(void) { // Initialize hardware SPI
 }
 
 void Adafruit_DotStar::hw_spi_end(void) { // Stop hardware SPI
-#ifdef __AVR_ATtiny85__
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny84__)
   DDRB &= ~(_BV(PORTB1) | _BV(PORTB2)); // Inputs
 #elif (SPI_INTERFACES_COUNT > 0) || !defined(SPI_INTERFACES_COUNT)
   SPI.end();
@@ -152,7 +152,7 @@ void Adafruit_DotStar::sw_spi_end() { // Stop 'soft' SPI
   pinMode(clockPin, INPUT);
 }
 
-#ifdef __AVR_ATtiny85__
+#if defined(__AVR_ATtiny85__) || defined(__AVR_ATtiny84__)
 
 // Teensy/Gemma-specific stuff for hardware-half-assisted SPI
 
@@ -171,7 +171,7 @@ static void spi_out(uint8_t n) { // Clock out one byte
 
 #define spi_out(n) (void)SPI.transfer(n)
 // Pipelining reads next byte while current byte is clocked out
-#if (defined(__AVR__) && !defined(__AVR_ATtiny85__)) || defined(CORE_TEENSY)
+#if (defined(__AVR__) && (!defined(__AVR_ATtiny85__)||!defined(__AVR_ATtiny84__))) || defined(CORE_TEENSY)
  #define SPI_PIPELINE
 #endif
 
