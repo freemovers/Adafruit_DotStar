@@ -40,7 +40,7 @@
 
 
 
-#include <Adafruit_DotStar84.h>
+#include <Adafruit_DotStar.h>
 
 #define LEGS        5 // Number of legs on the board
 #define CLOCKPIN    4 // Clock pin used by all legs
