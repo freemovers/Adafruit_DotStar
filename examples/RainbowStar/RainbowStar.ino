@@ -426,12 +426,10 @@ void setup()
     Leg1.RainbowCycle(3);
 
     pinMode(8, INPUT_PULLUP);
-    pinMode(9, OUTPUT);
-    digitalWrite(9, HIGH);
+    pinMode(9, INPUT_PULLUP);
     pinMode(11, INPUT_PULLUP);
     pinMode(0, INPUT_PULLUP);
-    pinMode(10, OUTPUT);
-    digitalWrite(10, HIGH);
+    pinMode(10, INPUT); // already has input pull up on the D- data line used for USB
 }
 
 // Main loop
